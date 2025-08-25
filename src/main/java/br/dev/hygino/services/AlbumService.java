@@ -2,6 +2,8 @@ package br.dev.hygino.services;
 
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +26,10 @@ public class AlbumService {
         entity.setCreatedAt(LocalDate.now());
         entity = albumRepository.save(entity);
         return new ResponseAlbumDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ResponseAlbumDto> findAlbuns(Pageable pageable) {
+        return albumRepository.findAll(pageable).map(ResponseAlbumDto::new);
     }
 }
