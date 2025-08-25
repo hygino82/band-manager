@@ -1,0 +1,9 @@
+###Insert album
+POST http://localhost:8080/api/v1/album
+Content-Type: application/json
+
+{
+    "title": "A Matter of life an death",
+    "bandName": "Iron Maiden",
+    "releaseYear": 2006
+}

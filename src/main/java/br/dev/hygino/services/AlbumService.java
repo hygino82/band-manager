@@ -1,5 +1,7 @@
 package br.dev.hygino.services;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class AlbumService {
     @Transactional
     public ResponseAlbumDto insert(RequestAlbumDto dto) {
         Album entity = new Album(dto.bandName(), dto.title(), dto.releaseYear());
+        entity.setCreatedAt(LocalDate.now());
         entity = albumRepository.save(entity);
         return new ResponseAlbumDto(entity);
     }
