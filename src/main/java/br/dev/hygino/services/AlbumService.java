@@ -30,6 +30,20 @@ public class AlbumService {
 
     @Transactional(readOnly = true)
     public Page<ResponseAlbumDto> findAlbuns(Pageable pageable) {
-        return albumRepository.findAll(pageable).map(ResponseAlbumDto::new);
+
+        final Page<Album> result = albumRepository.findAll(pageable);
+
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("No albums found");
+        }
+
+        return result.map(ResponseAlbumDto::new);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseAlbumDto findById(Long id) {
+        final Album result = albumRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Album not found"));
+        return new ResponseAlbumDto(result);
     }
 }
