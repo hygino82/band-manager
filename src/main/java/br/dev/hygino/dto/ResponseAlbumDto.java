@@ -1,6 +1,6 @@
 package br.dev.hygino.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,8 +12,8 @@ public record ResponseAlbumDto(
         String bandName,
         String title,
         Short releaseYear,
-        LocalDate createdAt,
-        LocalDate updatedAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         Set<MinimalResponseMusicDto> musics) {
 
     public ResponseAlbumDto(Album entity) {

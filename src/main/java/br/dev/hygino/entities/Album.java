@@ -1,6 +1,6 @@
 package br.dev.hygino.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,8 +36,8 @@ public class Album {
     @OneToMany(mappedBy = "album")
     private Set<Music> musics = new HashSet<>();
 
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Album() {
     }
@@ -76,23 +76,27 @@ public class Album {
         return releaseYear;
     }
 
+    public void setReleaseYear(Short releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
     public Set<Music> getMusics() {
         return musics;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
