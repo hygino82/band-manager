@@ -1,5 +1,6 @@
 package br.dev.hygino.entities;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_album")
@@ -18,12 +22,22 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "O nome da banda não pode ser vazio")
+    @Size(min = 3, max = 100, message = "O nome da banda deve ter entre 3 e 100 caracteres")
     private String bandName;
+
+    @NotBlank(message = "O título do álbum não pode ser vazio")
+    @Size(min = 3, max = 100, message = "O título do álbum deve ter entre 3 e 100 caracteres")
     private String title;
+
+    @NotNull(message = "O ano deve ser informado")
     private Short releaseYear;
 
     @OneToMany(mappedBy = "album")
     private Set<Music> musics = new HashSet<>();
+
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 
     public Album() {
     }
@@ -66,8 +80,20 @@ public class Album {
         return musics;
     }
 
-    public void setMusics(Set<Music> musics) {
-        this.musics = musics;
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
