@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +45,15 @@ public class MusicController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        try {
+            ResponseMusicDto dto = service.getById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

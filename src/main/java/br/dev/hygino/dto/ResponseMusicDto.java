@@ -9,7 +9,7 @@ public record ResponseMusicDto(
                 String title,
                 Integer duration,
                 String album,
-                String bandName,
+                String artist,
                 LocalDateTime createdAt,
                 LocalDateTime updatedAt) {
 

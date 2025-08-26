@@ -50,4 +50,11 @@ public class MusicService {
     public Page<ResponseMusicDto> getAll(Pageable pageable) {
         return musicRepository.findAll(pageable).map(ResponseMusicDto::new);
     }
+
+    @Transactional(readOnly = true)
+    public ResponseMusicDto getById(Long id) {
+        final Music music = musicRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Music not found"));
+        return new ResponseMusicDto(music);
+    }
 }
