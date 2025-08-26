@@ -74,4 +74,9 @@ public class MusicService {
             throw new IllegalArgumentException("Music not found");
         }
     }
+
+    public void delete(Long id) {
+        Music music = musicRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Music not found"));
+        musicRepository.delete(music);
+    }
 }
