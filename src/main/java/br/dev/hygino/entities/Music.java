@@ -1,5 +1,7 @@
 package br.dev.hygino.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_music")
@@ -19,18 +22,22 @@ public class Music {
     private long id;
 
     @NotBlank
+    @Size(max = 100, min = 3, message = "O título deve ter entre 3 e 100 caracteres")
     private String title;
 
-    @NotNull
+    @NotNull(message = "A duração é obrigatória")
     private Integer duration;
 
-    @NotNull
+    @NotNull(message = "O número da faixa é obrigatório")
     private Character trackNumber;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
-    @NotNull
+    @NotNull(message = "O álbum é obrigatório")
     private Album album;
+
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
     public Music() {
     }
@@ -73,6 +80,22 @@ public class Music {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
