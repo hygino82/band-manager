@@ -13,6 +13,7 @@ import br.dev.hygino.entities.Album;
 import br.dev.hygino.entities.Music;
 import br.dev.hygino.repositories.AlbumRepository;
 import br.dev.hygino.repositories.MusicRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class MusicService {
@@ -56,5 +57,21 @@ public class MusicService {
         final Music music = musicRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Music not found"));
         return new ResponseMusicDto(music);
+    }
+
+    @Transactional
+    public ResponseMusicDto update(Long id, RequestMusicDto dto) {
+        final Album album = albumRepository.findById(dto.albumId())
+                .orElseThrow(() -> new IllegalArgumentException("Album not found"));
+        try {
+            Music music = musicRepository.getReferenceById(id);
+            dtoToEntity(dto, music, album);
+            music.setUpdatedAt(LocalDateTime.now());
+            music = musicRepository.save(music);
+
+            return new ResponseMusicDto(music);
+        } catch (EntityNotFoundException e) {
+            throw new IllegalArgumentException("Music not found");
+        }
     }
 }

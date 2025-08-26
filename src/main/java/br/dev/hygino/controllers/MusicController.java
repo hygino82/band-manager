@@ -16,6 +16,7 @@ import br.dev.hygino.dto.ResponseMusicDto;
 import br.dev.hygino.services.MusicService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("api/v1/music")
@@ -54,6 +55,16 @@ public class MusicController {
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequestMusicDto dto) {
+        try {
+            ResponseMusicDto updatedDto = service.update(id, dto);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+        } catch (IllegalArgumentException | ConstraintViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }
