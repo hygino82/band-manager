@@ -29,7 +29,7 @@ public class Music {
     private Integer duration;
 
     @NotNull(message = "O número da faixa é obrigatório")
-    private Character trackNumber;
+    private Short trackNumber;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
@@ -66,11 +66,11 @@ public class Music {
         this.duration = duration;
     }
 
-    public Character getTrackNumber() {
+    public Short getTrackNumber() {
         return trackNumber;
     }
 
-    public void setTrackNumber(Character trackNumber) {
+    public void setTrackNumber(Short trackNumber) {
         this.trackNumber = trackNumber;
     }
 

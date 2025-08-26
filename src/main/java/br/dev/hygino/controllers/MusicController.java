@@ -1,13 +1,17 @@
 package br.dev.hygino.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.dev.hygino.dto.RequestMusicDto;
+import br.dev.hygino.dto.ResponseMusicDto;
 import br.dev.hygino.services.MusicService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -29,5 +33,16 @@ public class MusicController {
         } catch (IllegalArgumentException | ConstraintViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAll(Pageable pageable) {
+        Page<ResponseMusicDto> result = service.getAll(pageable);
+
+        if (result.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

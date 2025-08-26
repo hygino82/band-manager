@@ -2,6 +2,8 @@ package br.dev.hygino.services;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +44,10 @@ public class MusicService {
         music.setDuration(dto.duration());
         music.setAlbum(album);
         music.setTrackNumber(dto.trackNumber());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ResponseMusicDto> getAll(Pageable pageable) {
+        return musicRepository.findAll(pageable).map(ResponseMusicDto::new);
     }
 }

@@ -1,3 +1,4 @@
+###Insert a new music record
 POST http://localhost:8080/api/v1/music
 Content-Type: application/json
 
@@ -7,3 +8,6 @@ Content-Type: application/json
    "duration": 240,
    "trackNumber": "1"
 }
+
+###Get all music records
+GET http://localhost:8080/api/v1/music
